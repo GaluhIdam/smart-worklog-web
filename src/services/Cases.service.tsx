@@ -11,8 +11,8 @@ export class CasesService {
   async get(request: PaginationRequest<CasesSearchRequest>): Promise<PaginationResponse<CasesResponse>> {
     return httpService.get<PaginationResponse<CasesResponse>>("/cases", {
       params: {
-        search: request.request.search,
-        status: request.request.status,
+        search: request?.request?.search,
+        status: request?.request?.status,
         page: request.page,
         limit: request.limit,
       },

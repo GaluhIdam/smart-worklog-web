@@ -1,3 +1,5 @@
+import type { UserModel } from "./User.model";
+
 export interface EmployeeModel {
   id: number;
   user_id: number;
@@ -13,4 +15,5 @@ export interface EmployeeModel {
   created_at: Date;
   updated_at: Date;
   deleted_at: null;
+  user: UserModel;
 }

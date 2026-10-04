@@ -1,5 +1,5 @@
 export interface PaginationRequest<T> {
-  request: T;
-  page: number;
-  limit: number;
+  request?: T;
+  page?: number;
+  limit?: number;
 }

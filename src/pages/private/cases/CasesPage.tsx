@@ -25,6 +25,9 @@ export default function CasesPage() {
     isOpen,
     setIsOpen,
     toggleCreateCase,
+
+    getEmployee,
+    employees,
   } = useCaseAction();
 
   return (
@@ -35,17 +38,29 @@ export default function CasesPage() {
             <h1 className="text-xl font-semibold tracking-tight text-slate-900">Cases</h1>
             <p className="mt-1 text-sm text-slate-500">Manage and track employee cases.</p>
           </div>
-          <Button type="button" leftIcon={<Plus size={15} strokeWidth={2} />} onClick={() => setIsOpen(true)}>
+          <Button
+            type="button"
+            leftIcon={<Plus size={15} strokeWidth={2} />}
+            onClick={() => {
+              getEmployee({});
+              setIsOpen(true);
+            }}>
             Create New
           </Button>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
           <div className="flex flex-col gap-3 border-b border-slate-200 p-3 sm:flex-row sm:items-center sm:justify-between">
-            <SearchInput value={search} onChange={(event) => {
-              setSearch(event);
-              setCurrentPage(1);
-            }} placeholder="Search cases..." debounce={400} className="sm:max-w-xs" />
+            <SearchInput
+              value={search}
+              onChange={(event) => {
+                setSearch(event);
+                setCurrentPage(1);
+              }}
+              placeholder="Search cases..."
+              debounce={400}
+              className="sm:max-w-xs"
+            />
             <Dropdown
               value={selectedStatus}
               options={optionStatus}
@@ -104,7 +119,7 @@ export default function CasesPage() {
         </div>
       </div>
 
-      <CaseModal open={isOpen} onClose={() => setIsOpen(false)} employees={[]} caseData={null} onSubmit={toggleCreateCase} />
+      <CaseModal open={isOpen} onClose={() => setIsOpen(false)} employees={employees} caseData={null} onSubmit={toggleCreateCase} />
     </>
   );
 }

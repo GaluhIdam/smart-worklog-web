@@ -5,6 +5,10 @@ import type { CasesResponse } from "../../../data/response/Cases/CasesResponse";
 import { casesService } from "../../../services/Cases.service";
 import type { CasesCreateRequest } from "../../../data/request/Cases/CasesCreateRequest";
 import type { CreateCaseFormData } from "./CaseModal";
+import type { PaginationRequest } from "../../../common/request/PaginationRequest";
+import type { EmployeeSearchRequest } from "../../../data/request/Employee/EmployeeSearchRequest";
+import { employeeService } from "../../../services/Employee.service";
+import type { EmployeeResponse } from "../../../data/response/Employee/EmployeeResponse";
 
 const optionStatus: DropdownOption[] = [
   {
@@ -42,6 +46,10 @@ export default function useCaseAction() {
   const [error, setError] = useState<string | null>(null);
   const [dataCases, setDataCases] = useState<CasesResponse[]>([]);
 
+  const [loadingEmployee, setLoadingEmployee] = useState(false);
+  const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
+  const [employeeError, setEmployeeError] = useState<string | null>(null);
+
   const fetchCases = useCallback(async () => {
     try {
       const response = await casesService.get({
@@ -75,6 +83,20 @@ export default function useCaseAction() {
       throw error;
     } finally {
       setLoading(false);
+    }
+  }, []);
+
+  const getEmployee = useCallback(async (request: PaginationRequest<EmployeeSearchRequest>) => {
+    try {
+      setLoadingEmployee(true);
+      const response = await employeeService.get(request);
+      setEmployees(response.data);
+    } catch (error) {
+      console.error(error);
+      setLoadingEmployee(false);
+      setError("Failed to get employee.");
+    } finally {
+      setLoadingEmployee(false);
     }
   }, []);
 
@@ -126,5 +148,8 @@ export default function useCaseAction() {
     setIsOpen,
 
     toggleCreateCase,
+    
+    getEmployee,
+    employees,
   };
 }

@@ -5,16 +5,12 @@ import { z } from "zod";
 import Button from "../../../components/Button";
 import Modal from "../../../components/Modal";
 import type { CasesModel } from "../../../data/model/Cases/Cases.model";
-
-interface Employee {
-  id: number;
-  name: string;
-}
+import type { EmployeeResponse } from "../../../data/response/Employee/EmployeeResponse";
 
 interface CaseModalProps {
   open: boolean;
   onClose: () => void;
-  employees: Employee[];
+  employees: EmployeeResponse[];
   caseData?: CasesModel | null;
   onSubmit: (data: CreateCaseFormData) => void | Promise<void>;
 }
@@ -247,7 +243,7 @@ export default function CaseModal({ open, onClose, employees, caseData, onSubmit
             className={`${selectClass(!!errors.pic_ids)} min-h-28`}>
             {employees.map((employee) => (
               <option key={employee.id} value={employee.id}>
-                {employee.name}
+                {employee.user.name}
               </option>
             ))}
           </select>
@@ -268,7 +264,7 @@ export default function CaseModal({ open, onClose, employees, caseData, onSubmit
             className={`${selectClass(!!errors.member_ids)} min-h-28`}>
             {employees.map((employee) => (
               <option key={employee.id} value={employee.id}>
-                {employee.name}
+                {employee.user.name}
               </option>
             ))}
           </select>

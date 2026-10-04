@@ -11,7 +11,7 @@ export class EmployeeService {
   async get(request: PaginationRequest<EmployeeSearchRequest>): Promise<PaginationResponse<EmployeeResponse>> {
     return httpService.get<PaginationResponse<EmployeeResponse>>("/employees", {
       params: {
-        search: request.request.search,
+        search: request?.request?.search,
         page: request.page,
         limit: request.limit,
       },
