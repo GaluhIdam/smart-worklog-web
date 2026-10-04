@@ -42,7 +42,10 @@ export default function CasesPage() {
 
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
           <div className="flex flex-col gap-3 border-b border-slate-200 p-3 sm:flex-row sm:items-center sm:justify-between">
-            <SearchInput value={search} onChange={setSearch} placeholder="Search cases..." debounce={400} className="sm:max-w-xs" />
+            <SearchInput value={search} onChange={(event) => {
+              setSearch(event);
+              setCurrentPage(1);
+            }} placeholder="Search cases..." debounce={400} className="sm:max-w-xs" />
             <Dropdown
               value={selectedStatus}
               options={optionStatus}
